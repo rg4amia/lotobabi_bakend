@@ -12,5 +12,14 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
+
+Route::group(['prefix' => 'paris', 'as' => 'paris.'], function () {
+    Route::get('/generate', 'ParisController@index')->name('index');
+    Route::post('/store','ParisController@store')->name('store');
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
