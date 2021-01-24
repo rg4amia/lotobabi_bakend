@@ -11,8 +11,8 @@
     <meta name="keywords" content="IPTECH-CI,ecole,eleve,etablissement">
     <meta name="author" content="Amia Stephane - r4gamia@gmail.com">
     <title>BABILOTO - @yield('title')</title>
-    <link rel="apple-touch-icon" href="{{ asset('app-assets/images/logo/icon_iptechci.png') }}">
-    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('app-assets/images/logo/icon_iptechci.png') }}">
+    <link rel="apple-touch-icon" href="{{ asset('app-assets/images/logo/logo_lotobabi.png') }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('app-assets/images/logo/logo_lotobabi.png') }}">
     <link href="https://fonts.googleapis.com/css?family=Montserrat:300,400,500,600" rel="stylesheet">
     @include('layouts.styles')
 </head>
