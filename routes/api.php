@@ -30,4 +30,10 @@ Route::group(['middleware' => 'auth.jwt'], function () {
     Route::post('products', 'ProductController@store');
     Route::put('products/{id}', 'ProductController@update');
     Route::delete('products/{id}', 'ProductController@destroy');
+
+    Route::get('tickets', 'TicketController@index');
+    Route::get('tickets/{id}', 'TicketController@show');
+    Route::post('tickets', 'TicketController@store');
+    Route::put('tickets/{id}', 'TicketController@update');
+    Route::delete('tickets/{id}', 'TicketController@destroy');
 });
