@@ -45,15 +45,16 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request, [
-            'pions' => 'required',
-            'typejeu' => 'required',
-            'typejeu2' => 'required',
-            'doublechance' => 'required',
-            'jeujour_name' => 'required',
-            'jeujour_heure' => 'required',
-            'montantmise' => 'required|integer',
-        ]);
+    	//dd($request->all());
+        // $this->validate($request, [
+        //     'pions' => 'required',
+        //     'typejeu' => 'required',
+        //     'typejeu2' => 'required',
+        //     'doublechance' => 'required',
+        //     'jeujour_name' => 'required',
+        //     'jeujour_heure' => 'required',
+        //     'montantmise' => 'required',
+        // ]);
 
         $ticket = new Ticket();
         $ticket->pions = $request->pions;
