@@ -420,9 +420,6 @@ class RepartiGainCommand extends Command
                     $ticket->gains= $gain_user + $gain_user2;
                     $ticket->status = true;
                     $ticket->save();
-
-                    dd($ticket);
-
                 }else{
                     $ticket->status = true;
                     $ticket->save();
