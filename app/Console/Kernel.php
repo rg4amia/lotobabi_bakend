@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\RepartiGainCommand;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -13,7 +14,7 @@ class Kernel extends ConsoleKernel
      * @var array
      */
     protected $commands = [
-        //
+        RepartiGainCommand::class
     ];
 
     /**
@@ -24,6 +25,8 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
+        $schedule->command(RepartiGainCommand::class)->dailyAt('17:00')
+            ->appendOutputTo(storage_path('logs/setrencontrestatusce.log'));
         // $schedule->command('inspire')
         //          ->hourly();
     }

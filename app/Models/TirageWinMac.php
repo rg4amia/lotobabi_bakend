@@ -8,10 +8,11 @@ class TirageWinMac extends Model
 {
 
     protected $table = 'tirage_win_macs';
-    protected $fillable = ['tirage_win','tirage_mac','mode'];
+    protected $fillable = ['tirage_win','tirage_mac','mode','status'];
     protected $casts = [
       'tirage_win'  => 'array',
       'tirage_mac'  => 'array',
-      'mode'        => 'string'
+      'mode'        => 'string',
+      'status'      => 'boolean'
     ];
 }
