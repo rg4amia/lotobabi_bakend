@@ -12,7 +12,7 @@
 namespace Tymon\JWTAuth\Http\Middleware;
 
 use Closure;
-
+use JWTAuth;
 /** @deprecated */
 class Authenticate extends BaseMiddleware
 {
