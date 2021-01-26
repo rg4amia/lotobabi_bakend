@@ -33,6 +33,21 @@ class RepartiGainCommand extends Command
         parent::__construct();
     }
 
+    public function factorielle($nbr)
+    {
+        if($nbr === 0) // condition d'arret
+            return 1;
+        else
+            return $nbr* $this->factorielle($nbr-1);
+    }
+    /*Ckn=n!k!(n−k)!
+     * */
+
+    public function combinaison($k,$n){
+        $combinaison = ($this->factorielle($n)) / ($this->factorielle($k) * ( $this->factorielle($n - $k)));
+        return $combinaison;
+    }
+
     /**
      * Execute the console command.
      *
@@ -40,6 +55,7 @@ class RepartiGainCommand extends Command
      */
     public function handle()
     {
+
         $tirages = TirageWinMac::whereStatus(false);
 
         if ($this->argument('id')) {
@@ -83,7 +99,7 @@ class RepartiGainCommand extends Command
                     $coef_TURBO2 = 2400;
                     $coef_TURBO3 = 2400;
                     $coef_TURBO4 = 2400;
-
+                   // $combinaison = 0;
 
                     $gain_user = '';
                     // affectation de la mise du client
@@ -241,7 +257,8 @@ class RepartiGainCommand extends Command
                             if (!$doublechance) {
                                 $result = array_intersect($choix, $tirage);
                                 if (count($result) > 1) {
-                                    $gain_user = ($coef_2N * count($result)) * $mise;
+                                    $combinaison = $this->combinaison(2,count($result) );
+                                    $gain_user = ($coef_2N * $combinaison) * $mise;
                                 } else {
                                     $gain_user = 0;
                                 }
@@ -250,12 +267,14 @@ class RepartiGainCommand extends Command
                                 $result_2 = array_intersect($choix, $tirage_machine);
 
                                 if (count($result_1) > 1) {
+                                    $combinaison = $this->combinaison(2,count($result_1) );
                                     $gain_user
-                                        = (($coef_2N * $mise * count($result_1)) * 60) / 100;
+                                        = (($coef_2N * $mise * $combinaison) * 60) / 100;
                                 } else {
                                     if (count($result_2) > 1) {
+                                        $combinaison = $this->combinaison(2,count($result_2) );
                                         $gain_user
-                                            = (($coef_2N * $mise* count($result_2)) * 40) / 100;
+                                            = (($coef_2N * $mise* $combinaison) * 40) / 100;
                                     } else {
                                         $gain_user = 0;
                                     }
@@ -266,7 +285,8 @@ class RepartiGainCommand extends Command
                             if (!$doublechance) {
                                 $result = array_intersect($choix, $tirage);
                                 if (count($result) > 2) {
-                                    $gain_user = ($coef_3N * count($result)) * $mise;
+                                    $combinaison = $this->combinaison(3,count($result) );
+                                    $gain_user = ($coef_3N * $combinaison) * $mise;
                                 } else {
                                     $gain_user = 0;
                                 }
@@ -274,12 +294,15 @@ class RepartiGainCommand extends Command
                                 $result_1 = array_intersect($choix, $tirage);
                                 $result_2 = array_intersect($choix, $tirage_machine);
                                 if (count($result_1) > 2) {
+                                    $combinaison = $this->combinaison(3,count($result_1) );
                                     $gain_user
-                                        = (($coef_3N * $mise * count($result_1)) * 60) / 100;
+                                        = (($coef_3N * $mise * $combinaison) * 60) / 100;
                                 } else {
                                     if (count($result_2) > 2) {
+                                        $combinaison = $this->combinaison(3,count($result_2) );
+
                                         $gain_user
-                                            = (($coef_3N * $mise * count($result_2)) * 40) / 100;
+                                            = (($coef_3N * $mise * $combinaison) * 40) / 100;
                                     } else {
                                         $gain_user = 0;
                                     }
@@ -290,7 +313,8 @@ class RepartiGainCommand extends Command
                             if (!$doublechance) {
                                 $result = array_intersect($choix, $tirage);
                                 if (count($result) > 3) {
-                                    $gain_user = ($coef_4N * count($result)) * $mise;
+                                    $combinaison = $this->combinaison(4,count($result) );
+                                    $gain_user = ($coef_4N * $combinaison) * $mise;
                                 } else {
                                     $gain_user = 0;
                                 }
@@ -299,12 +323,14 @@ class RepartiGainCommand extends Command
                                 $result_2 = array_intersect($choix, $tirage_machine);
 
                                 if (count($result_1) > 3) {
+                                    $combinaison = $this->combinaison(4,count($result_1) );
                                     $gain_user
-                                        = (($coef_4N * $mise * count($result_1)) * 60) / 100;
+                                        = (($coef_4N * $mise * $combinaison) * 60) / 100;
                                 } else {
                                     if (count($result_2) > 3) {
+                                        $combinaison = $this->combinaison(4,count($result_2) );
                                         $gain_user
-                                            = (($coef_4N * $mise * count($result_2)) * 40) / 100;
+                                            = (($coef_4N * $mise * $combinaison) * 40) / 100;
                                     } else {
                                         $gain_user = 0;
                                     }
@@ -315,7 +341,8 @@ class RepartiGainCommand extends Command
                             if (!$doublechance) {
                                 $result = array_intersect($choix, $tirage);
                                 if (count($result) > 4) {
-                                    $gain_user = ($coef_5N * count($result)) * $mise;
+                                    $combinaison = $this->combinaison(5,count($result) );
+                                    $gain_user = ($coef_5N * $combinaison) * $mise;
                                 } else {
                                     $gain_user = 0;
                                 }
@@ -324,12 +351,12 @@ class RepartiGainCommand extends Command
                                 $result_2 = array_intersect($choix, $tirage_machine);
 
                                 if (count($result_1) > 4) {
-                                    $gain_user
-                                        = (($coef_5N * $mise * count($result_1)) * 60) / 100;
+                                    $combinaison = $this->combinaison(5,count($result_1) );
+                                    $gain_user = (($coef_5N * $mise * $combinaison) * 60) / 100;
                                 } else {
                                     if (count($result_2) > 3) {
-                                        $gain_user
-                                            = (($coef_5N * $mise * count($result_2)) * 40) / 100;
+                                        $combinaison = $this->combinaison(5,count($result_2) );
+                                        $gain_user = (($coef_5N * $mise * $combinaison) * 40) / 100;
                                     } else {
                                         $gain_user = 0;
                                     }
