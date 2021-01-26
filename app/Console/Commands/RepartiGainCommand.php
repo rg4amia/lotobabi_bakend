@@ -97,351 +97,452 @@ class RepartiGainCommand extends Command
                     $coef_4N = 5000;
                     $coef_5N = 40000;
                     $coef_TURBO2 = 2400;
-                    $coef_TURBO3 = 2400;
-                    $coef_TURBO4 = 2400;
+                    $coef_TURBO3 = 800;
+                    $coef_TURBO4 = 400;
                    // $combinaison = 0;
 
-                    $gain_user = '';
+                    $gain_user = 0;
+                 	$gain_user2 = 0;
                     // affectation de la mise du client
                     $mise = $ticket->montantmise;
                     //affect de typde de paris
                     $typedeparis = $ticket->typejeu;
-                    $typedeparis2 = $ticket->typejeu;
+                    $typedeparis2 = $ticket->typejeu2;
                     $doublechance = $ticket->doublechance;
 
-                    switch ($typedeparis) {
-                        case 'PN':
-                            if (!$doublechance) {
-                                if ($choix[0] == $tirage[0]) {
-                                    $gain_user =
-                                        $coef_PN * $mise;
-                                }else{
-                                    $gain_user = 0;
-                                }
-                            } else {
-                                if ($choix[0] == $tirage_machine[0]) {
-                                    $gain_user
-                                        = (($coef_PN * $mise) * 40) / 100;
-                                } elseif ($choix[0] == $tirage[0]) {
-                                    $gain_user = (($coef_PN * $mise) * 60) / 100;
-                                }
-                            }
-                            break;
-                        case '1N':
-                            if (!$doublechance) {
-                                $result = array_intersect($choix, $tirage);
-                                if (count($result) == 1) {
-                                    $gain_user = $coef_1N * $mise;
-                                }else{
-                                    $gain_user = 0;
-                                }
-                            }else {
-                                $result_1 = array_intersect($choix, $tirage);
-                                $result_2 = array_intersect($choix, $tirage_machine);
-
-                                if (count($result_1) == 1) {
-                                    $gain_user
-                                        = (($coef_1N * $mise) * 60) / 100;
-                                }else {
-                                    if (count($result_2) == 1) {
-                                        $gain_user
-                                            = (($coef_1N * $mise) * 40) / 100;
-                                    }else{
-                                        $gain_user = 0;
-                                    }
-                                }
-
-                            }
-                            break;
-                        case '2N':
-                            if (!$doublechance) {
-                                $result = array_intersect($choix, $tirage);
-                                if (count($result) == 2) {
-                                    $gain_user = $coef_2N * $mise;
-                                } else {
-                                    $gain_user = 0;
-                                }
-                            } else {
-                                $result_1 = array_intersect($choix, $tirage);
-                                $result_2 = array_intersect($choix, $tirage_machine);
-
-                                if (count($result_1) == 2) {
-                                    $gain_user
-                                        = (($coef_2N * $mise) * 60) / 100;
-                                } else {
-                                    if (count($result_2) == 2) {
-                                        $gain_user
-                                            = (($coef_2N * $mise) * 40) / 100;
+                    if
+                    ($typedeparis2 != null){
+                        switch ($typedeparis) {
+                            case 'PN':
+                                if (!$doublechance) {
+                                    if ($choix[0] == $tirage[0]) {
+                                        $gain_user =
+                                            $coef_PN * $mise;
                                     } else {
                                         $gain_user = 0;
                                     }
-                                }
-                            }
-                            break;
-                        case '3N':
-                            if (!$doublechance) {
-                                $result = array_intersect($choix, $tirage);
-                                if (count($result) == 3) {
-                                    $gain_user = $coef_3N * $mise;
                                 } else {
-                                    $gain_user = 0;
-                                }
-                            } else {
-                                $result_1 = array_intersect($choix, $tirage);
-                                $result_2 = array_intersect($choix, $tirage_machine);
-
-                                if (count($result_1) == 3) {
-                                    $gain_user
-                                        = (($coef_3N * $mise) * 60) / 100;
-                                } else {
-                                    if (count($result_2) == 3) {
+                                    if ($choix[0] == $tirage_machine[0]) {
                                         $gain_user
-                                            = (($coef_3N * $mise) * 40) / 100;
+                                            = (($coef_PN * $mise) * 40) / 100;
+                                    } elseif ($choix[0] == $tirage[0]) {
+                                        $gain_user = (($coef_PN * $mise) * 60) / 100;
+                                    }
+                                }
+                                break;
+                            case '1N':
+                                if (!$doublechance) {
+                                    $result = array_intersect($choix, $tirage);
+                                    if (count($result) == 1) {
+                                        $gain_user = $coef_1N * $mise;
                                     } else {
                                         $gain_user = 0;
                                     }
-                                }
-                            }
-                            break;
-                        case '4N':
-                            if (!$doublechance) {
-                                $result = array_intersect($choix, $tirage);
-                                if (count($result) == 4) {
-                                    $gain_user = $coef_4N * $mise;
                                 } else {
-                                    $gain_user = 0;
-                                }
-                            } else {
-                                $result_1 = array_intersect($choix, $tirage);
-                                $result_2 = array_intersect($choix, $tirage_machine);
+                                    $result_1 = array_intersect($choix, $tirage);
+                                    $result_2 = array_intersect($choix, $tirage_machine);
 
-                                if (count($result_1) == 4) {
-                                    $gain_user
-                                        = (($coef_4N * $mise) * 60) / 100;
-                                } else {
-                                    if (count($result_2) == 4) {
+                                    if (count($result_1) == 1) {
                                         $gain_user
-                                            = (($coef_4N * $mise) * 40) / 100;
+                                            = (($coef_1N * $mise) * 60) / 100;
+                                    } else {
+                                        if (count($result_2) == 1) {
+                                            $gain_user
+                                                = (($coef_1N * $mise) * 40) / 100;
+                                        } else {
+                                            $gain_user = 0;
+                                        }
+                                    }
+                                }
+                                break;
+                            case '2N':
+                                if (!$doublechance) {
+                                    $result = array_intersect($choix, $tirage);
+                                    if (count($result) == 2) {
+                                        $gain_user = $coef_2N * $mise;
                                     } else {
                                         $gain_user = 0;
                                     }
-                                }
-                            }
-                            break;
-                        case '5N':
-                            if (!$doublechance) {
-                                $result = array_intersect($choix, $tirage);
-                                if (count($result) == 5) {
-                                    $gain_user = $coef_5N * $mise;
                                 } else {
-                                    $gain_user = 0;
-                                }
-                            } else {
-                                $result_1 = array_intersect($choix, $tirage);
-                                $result_2 = array_intersect($choix, $tirage_machine);
+                                    $result_1 = array_intersect($choix, $tirage);
+                                    $result_2 = array_intersect($choix, $tirage_machine);
 
-                                if (count($result_1) == 5) {
-                                    $gain_user
-                                        = (($coef_5N * $mise) * 60) / 100;
-                                } else {
-                                    if (count($result_2) == 5) {
+                                    if (count($result_1) == 2) {
                                         $gain_user
-                                            = (($coef_5N * $mise) * 40) / 100;
+                                            = (($coef_2N * $mise) * 60) / 100;
+                                    } else {
+                                        if (count($result_2) == 2) {
+                                            $gain_user
+                                                = (($coef_2N * $mise) * 40) / 100;
+                                        } else {
+                                            $gain_user = 0;
+                                        }
+                                    }
+                                }
+                                break;
+                            case '3N':
+                                if (!$doublechance) {
+                                    $result = array_intersect($choix, $tirage);
+                                    if (count($result) == 3) {
+                                        $gain_user = $coef_3N * $mise;
                                     } else {
                                         $gain_user = 0;
                                     }
-                                }
-                            }
-                            break;
-                        case 'PERM 2N':
-                            if (!$doublechance) {
-                                $result = array_intersect($choix, $tirage);
-                                if (count($result) > 1) {
-                                    $combinaison = $this->combinaison(2,count($result) );
-                                    $gain_user = ($coef_2N * $combinaison) * $mise;
                                 } else {
-                                    $gain_user = 0;
-                                }
-                            }else{
-                                $result_1 = array_intersect($choix, $tirage);
-                                $result_2 = array_intersect($choix, $tirage_machine);
+                                    $result_1 = array_intersect($choix, $tirage);
+                                    $result_2 = array_intersect($choix, $tirage_machine);
 
-                                if (count($result_1) > 1) {
-                                    $combinaison = $this->combinaison(2,count($result_1) );
-                                    $gain_user
-                                        = (($coef_2N * $mise * $combinaison) * 60) / 100;
-                                } else {
-                                    if (count($result_2) > 1) {
-                                        $combinaison = $this->combinaison(2,count($result_2) );
+                                    if (count($result_1) == 3) {
                                         $gain_user
-                                            = (($coef_2N * $mise* $combinaison) * 40) / 100;
+                                            = (($coef_3N * $mise) * 60) / 100;
+                                    } else {
+                                        if (count($result_2) == 3) {
+                                            $gain_user
+                                                = (($coef_3N * $mise) * 40) / 100;
+                                        } else {
+                                            $gain_user = 0;
+                                        }
+                                    }
+                                }
+                                break;
+                            case '4N':
+                                if (!$doublechance) {
+                                    $result = array_intersect($choix, $tirage);
+                                    if (count($result) == 4) {
+                                        $gain_user = $coef_4N * $mise;
                                     } else {
                                         $gain_user = 0;
                                     }
-                                }
-                            }
-                            break;
-                        case 'PERM 3N':
-                            if (!$doublechance) {
-                                $result = array_intersect($choix, $tirage);
-                                if (count($result) > 2) {
-                                    $combinaison = $this->combinaison(3,count($result) );
-                                    $gain_user = ($coef_3N * $combinaison) * $mise;
                                 } else {
-                                    $gain_user = 0;
-                                }
-                            } else {
-                                $result_1 = array_intersect($choix, $tirage);
-                                $result_2 = array_intersect($choix, $tirage_machine);
-                                if (count($result_1) > 2) {
-                                    $combinaison = $this->combinaison(3,count($result_1) );
-                                    $gain_user
-                                        = (($coef_3N * $mise * $combinaison) * 60) / 100;
-                                } else {
-                                    if (count($result_2) > 2) {
-                                        $combinaison = $this->combinaison(3,count($result_2) );
+                                    $result_1 = array_intersect($choix, $tirage);
+                                    $result_2 = array_intersect($choix, $tirage_machine);
 
+                                    if (count($result_1) == 4) {
                                         $gain_user
-                                            = (($coef_3N * $mise * $combinaison) * 40) / 100;
+                                            = (($coef_4N * $mise) * 60) / 100;
+                                    } else {
+                                        if (count($result_2) == 4) {
+                                            $gain_user
+                                                = (($coef_4N * $mise) * 40) / 100;
+                                        } else {
+                                            $gain_user = 0;
+                                        }
+                                    }
+                                }
+                                break;
+                            case '5N':
+                                if (!$doublechance) {
+                                    $result = array_intersect($choix, $tirage);
+                                    if (count($result) == 5) {
+                                        $gain_user = $coef_5N * $mise;
                                     } else {
                                         $gain_user = 0;
                                     }
-                                }
-                            }
-                            break;
-                        case 'PERM 4N':
-                            if (!$doublechance) {
-                                $result = array_intersect($choix, $tirage);
-                                if (count($result) > 3) {
-                                    $combinaison = $this->combinaison(4,count($result) );
-                                    $gain_user = ($coef_4N * $combinaison) * $mise;
                                 } else {
-                                    $gain_user = 0;
-                                }
-                            } else {
-                                $result_1 = array_intersect($choix, $tirage);
-                                $result_2 = array_intersect($choix, $tirage_machine);
+                                    $result_1 = array_intersect($choix, $tirage);
+                                    $result_2 = array_intersect($choix, $tirage_machine);
 
-                                if (count($result_1) > 3) {
-                                    $combinaison = $this->combinaison(4,count($result_1) );
-                                    $gain_user
-                                        = (($coef_4N * $mise * $combinaison) * 60) / 100;
-                                } else {
-                                    if (count($result_2) > 3) {
-                                        $combinaison = $this->combinaison(4,count($result_2) );
+                                    if (count($result_1) == 5) {
                                         $gain_user
-                                            = (($coef_4N * $mise * $combinaison) * 40) / 100;
+                                            = (($coef_5N * $mise) * 60) / 100;
+                                    } else {
+                                        if (count($result_2) == 5) {
+                                            $gain_user
+                                                = (($coef_5N * $mise) * 40) / 100;
+                                        } else {
+                                            $gain_user = 0;
+                                        }
+                                    }
+                                }
+                                break;
+                            case 'PERM 2N':
+                                if (!$doublechance) {
+                                    $result = array_intersect($choix, $tirage);
+                                    if (count($result) > 1) {
+                                        $combinaison = $this->combinaison(2, count($result));
+                                        $gain_user = ($coef_2N * $combinaison) * $mise;
                                     } else {
                                         $gain_user = 0;
                                     }
-                                }
-                            }
-                            break;
-                        case 'PERM 5N':
-                            if (!$doublechance) {
-                                $result = array_intersect($choix, $tirage);
-                                if (count($result) > 4) {
-                                    $combinaison = $this->combinaison(5,count($result) );
-                                    $gain_user = ($coef_5N * $combinaison) * $mise;
                                 } else {
-                                    $gain_user = 0;
-                                }
-                            } else {
-                                $result_1 = array_intersect($choix, $tirage);
-                                $result_2 = array_intersect($choix, $tirage_machine);
+                                    $result_1 = array_intersect($choix, $tirage);
+                                    $result_2 = array_intersect($choix, $tirage_machine);
 
-                                if (count($result_1) > 4) {
-                                    $combinaison = $this->combinaison(5,count($result_1) );
-                                    $gain_user = (($coef_5N * $mise * $combinaison) * 60) / 100;
-                                } else {
-                                    if (count($result_2) > 3) {
-                                        $combinaison = $this->combinaison(5,count($result_2) );
-                                        $gain_user = (($coef_5N * $mise * $combinaison) * 40) / 100;
+                                    if (count($result_1) > 1) {
+                                        $combinaison = $this->combinaison(2, count($result_1));
+                                        $gain_user
+                                            = (($coef_2N * $mise * $combinaison) * 60) / 100;
+                                    } else {
+                                        if (count($result_2) > 1) {
+                                            $combinaison = $this->combinaison(2, count($result_2));
+                                            $gain_user
+                                                = (($coef_2N * $mise * $combinaison) * 40) / 100;
+                                        } else {
+                                            $gain_user = 0;
+                                        }
+                                    }
+                                }
+                                break;
+                            case 'PERM 3N':
+                                if (!$doublechance) {
+                                    $result = array_intersect($choix, $tirage);
+                                    if (count($result) > 2) {
+                                        $combinaison = $this->combinaison(3, count($result));
+                                        $gain_user = ($coef_3N * $combinaison) * $mise;
                                     } else {
                                         $gain_user = 0;
                                     }
-                                }
-                            }
-                            break;
-                        default:
-                            if (!$doublechance) {
-                            } else {
-                            }
-                            break;
-                    }
+                                } else {
+                                    $result_1 = array_intersect($choix, $tirage);
+                                    $result_2 = array_intersect($choix, $tirage_machine);
+                                    if (count($result_1) > 2) {
+                                        $combinaison = $this->combinaison(3, count($result_1));
+                                        $gain_user
+                                            = (($coef_3N * $mise * $combinaison) * 60) / 100;
+                                    } else {
+                                        if (count($result_2) > 2) {
+                                            $combinaison = $this->combinaison(3, count($result_2));
 
-                    $gain_user2 =  0;
-
-                    switch ($typedeparis2){
-                        case 'TURBO 2':
-                            if(!$doublechance){
-                                $res =  array_uintersect_assoc($choix, $tirage, "myfunction");
-                                if(count($res) == 2){
-                                    $gain_user2 = ($coef_TURBO2 * $mise);
-                                }else{
-                                    $gain_user2 = 0;
-                                }
-                            }else{
-                                $res1 = array_uintersect_assoc($choix, $tirage, "myfunction");
-                                $res2 = array_uintersect_assoc($choix, $tirage_machine, "myfunction");
-
-                                if (count($res1) == 2) {
-                                    $gain_user2 = (($coef_TURBO2 * $mise) * 60) / 100;
-                                }else{
-                                    if (count($res2) == 2) {
-                                        $gain_user2 = (($coef_TURBO2 * $mise) * 40) / 100;
-                                    }else{
-                                        $gain_user2 = 0;
+                                            $gain_user
+                                                = (($coef_3N * $mise * $combinaison) * 40) / 100;
+                                        } else {
+                                            $gain_user = 0;
+                                        }
                                     }
                                 }
-                            }
-                            break;
-                        case 'TURBO 3':
-                            if (!$doublechance) {
-                                $res =  array_uintersect_assoc($choix, $tirage, "myfunction");
-                                if (count($res) == 3) {
-                                    $gain_user2 = ($coef_TURBO3 * $mise);
+                                break;
+                            case 'PERM 4N':
+                                if (!$doublechance) {
+                                    $result = array_intersect($choix, $tirage);
+                                    if (count($result) > 3) {
+                                        $combinaison = $this->combinaison(4, count($result));
+                                        $gain_user = ($coef_4N * $combinaison) * $mise;
+                                    } else {
+                                        $gain_user = 0;
+                                    }
                                 } else {
-                                    $gain_user2 = 0;
-                                }
-                            } else {
-                                $res1 = array_uintersect_assoc($choix, $tirage, "myfunction");
-                                $res2 = array_uintersect_assoc($choix, $tirage_machine, "myfunction");
+                                    $result_1 = array_intersect($choix, $tirage);
+                                    $result_2 = array_intersect($choix, $tirage_machine);
 
-                                if (count($res1) == 3) {
-                                    $gain_user2 = (($coef_TURBO3 * $mise) * 60) / 100;
+                                    if (count($result_1) > 3) {
+                                        $combinaison = $this->combinaison(4, count($result_1));
+                                        $gain_user
+                                            = (($coef_4N * $mise * $combinaison) * 60) / 100;
+                                    } else {
+                                        if (count($result_2) > 3) {
+                                            $combinaison = $this->combinaison(4, count($result_2));
+                                            $gain_user
+                                                = (($coef_4N * $mise * $combinaison) * 40) / 100;
+                                        } else {
+                                            $gain_user = 0;
+                                        }
+                                    }
+                                }
+                                break;
+                            case 'PERM 5N':
+                                if (!$doublechance) {
+                                    $result = array_intersect($choix, $tirage);
+                                    if (count($result) > 4) {
+                                        $combinaison = $this->combinaison(5, count($result));
+                                        $gain_user = ($coef_5N * $combinaison) * $mise;
+                                    } else {
+                                        $gain_user = 0;
+                                    }
                                 } else {
-                                    if (count($res2) == 3) {
-                                        $gain_user2 = (($coef_TURBO3 * $mise) * 40) / 100;
+                                    $result_1 = array_intersect($choix, $tirage);
+                                    $result_2 = array_intersect($choix, $tirage_machine);
+
+                                    if (count($result_1) > 4) {
+                                        $combinaison = $this->combinaison(5, count($result_1));
+                                        $gain_user = (($coef_5N * $mise * $combinaison) * 60) / 100;
+                                    } else {
+                                        if (count($result_2) > 3) {
+                                            $combinaison = $this->combinaison(5, count($result_2));
+                                            $gain_user = (($coef_5N * $mise * $combinaison) * 40) / 100;
+                                        } else {
+                                            $gain_user = 0;
+                                        }
+                                    }
+                                }
+                                break;
+                            default:
+                                if (!$doublechance) {
+                                } else {
+                                }
+                                break;
+                        }
+
+                    }else {
+                        switch ($typedeparis2) {
+                            case 'TURBO 2':
+                                if (!$doublechance) {
+                                    $sliceturbo2 =  array_slice($tirage, 0, 2);
+                                    $res = array_intersect($choix, $sliceturbo2);
+                                    if (count($res) == 2) {
+                                        $gain_user2 = ($coef_TURBO2 * $mise);
                                     } else {
                                         $gain_user2 = 0;
                                     }
-                                }
-                            }
-                            break;
-                        case 'TURBO 4':
-                            if (!$doublechance) {
-                                $res =  array_uintersect_assoc($choix, $tirage, "myfunction");
-                                if (count($res) == 4) {
-                                    $gain_user2 = ($coef_TURBO4 * $mise);
                                 } else {
-                                    $gain_user2 = 0;
-                                }
-                            } else {
-                                $res1 = array_uintersect_assoc($choix, $tirage, "myfunction");
-                                $res2 = array_uintersect_assoc($choix, $tirage_machine, "myfunction");
-
-                                if (count($res1) == 4) {
-                                    $gain_user2 = (($coef_TURBO4 * $mise) * 60) / 100;
-                                } else {
-                                    if (count($res2) == 4) {
-                                        $gain_user2 = (($coef_TURBO4 * $mise) * 40) / 100;
+                                    $slicetirageturbo2 =
+                                    array_slice($tirage, 0, 2);
+                                    $slicetiragemachineturbo2 =
+                                    array_slice($tirage_machine, 0, 2);
+                                    $res1 = array_intersect($choix, $slicetirageturbo2);
+                                    $res2 = array_intersect($choix, $slicetiragemachineturbo2);
+                                    if (count($res1) == 2) {
+                                        $gain_user2 = (($coef_TURBO2 * $mise) * 60) / 100;
                                     } else {
-                                        $gain_user2 = 0;
+                                        if (count($res2) == 2) {
+                                            $gain_user2 = (($coef_TURBO2 * $mise) * 40) / 100;
+                                        } else {
+                                            $gain_user2 = 0;
+                                        }
                                     }
                                 }
-                            }
-                            break;
+                                break;
+                            case 'TURBO 3':
+
+                                if($typedeparis == 'PERM 2N' OR $typedeparis2 == '2N'){
+                                    if (!$doublechance) {
+                                        $sliceturbo2 =  array_slice($tirage, 0, 3);
+                                        $res = array_intersect($choix, $sliceturbo2);
+                                        if (count($res) == 2) {
+                                            $gain_user2 = ($coef_TURBO3 * $mise);
+                                        } else {
+                                            $gain_user2 = 0;
+                                        }
+
+                                    }else {
+                                        $slicetirageturbo2 = array_slice($tirage, 0, 3);
+                                        $slicetiragemachineturbo2 = array_slice($tirage_machine, 0, 3);
+                                        $res1 = array_intersect($choix, $slicetirageturbo2);
+                                        $res2 = array_intersect($choix, $slicetiragemachineturbo2);
+
+                                        if (count($res1) == 2) {
+                                            $gain_user2 = (($coef_TURBO3 * $mise) * 60) / 100;
+                                        } else {
+                                            if (count($res2) == 2) {
+                                                $gain_user2 = (($coef_TURBO3 * $mise) * 40) / 100;
+                                            } else {
+                                                $gain_user2 = 0;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if ($typedeparis == 'PERM 3N' or $typedeparis2 == '3N') {
+                                    if (!$doublechance) {
+                                        $sliceturbo2 =  array_slice($tirage, 0, 3);
+                                        $res = array_intersect($choix, $sliceturbo2);
+                                        if (count($res) == 3) {
+                                            $gain_user2 = ($coef_TURBO3 * $mise);
+                                        } else {
+                                            $gain_user2 = 0;
+                                        }
+                                    } else {
+                                        $slicetirageturbo2 = array_slice($tirage, 0, 3);
+                                        $slicetiragemachineturbo2 = array_slice($tirage_machine, 0, 3);
+                                        $res1 = array_intersect($choix, $slicetirageturbo2);
+                                        $res2 = array_intersect($choix, $slicetiragemachineturbo2);
+
+                                        if (count($res1) == 3) {
+                                            $gain_user2 = (($coef_TURBO3 * $mise) * 60) / 100;
+                                        } else {
+                                            if (count($res2) == 3) {
+                                                $gain_user2 = (($coef_TURBO3 * $mise) * 40) / 100;
+                                            } else {
+                                                $gain_user2 = 0;
+                                            }
+                                        }
+                                    }
+                                }
+                                break;
+                            case 'TURBO 4':
+
+                                if ($typedeparis == 'PERM 2N' or $typedeparis2 == '2N') {
+                                    if (!$doublechance) {
+                                        $sliceturbo2 =  array_slice($tirage, 0, 4);
+                                        $res = array_intersect($choix, $sliceturbo2);
+                                        if (count($res) == 2) {
+                                            $gain_user2 = ($coef_TURBO4 * $mise);
+                                        } else {
+                                            $gain_user2 = 0;
+                                        }
+                                    } else {
+                                        $slicetirageturbo2 = array_slice($tirage, 0, 4);
+                                        $slicetiragemachineturbo2 = array_slice($tirage_machine, 0, 4);
+                                        $res1 = array_intersect($choix, $slicetirageturbo2);
+                                        $res2 = array_intersect($choix, $slicetiragemachineturbo2);
+
+                                        if (count($res1) == 2) {
+                                            $gain_user2 = (($coef_TURBO4 * $mise) * 60) / 100;
+                                        } else {
+                                            if (count($res2) == 2) {
+                                                $gain_user2 = (($coef_TURBO4 * $mise) * 40) / 100;
+                                            } else {
+                                                $gain_user2 = 0;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if ($typedeparis == 'PERM 3N' or $typedeparis2 == '3N') {
+                                    if (!$doublechance) {
+                                        $sliceturbo2 =  array_slice($tirage, 0, 4);
+                                        $res = array_intersect($choix, $sliceturbo2);
+                                        if (count($res) == 3) {
+                                            $gain_user2 = ($coef_TURBO4 * $mise);
+                                        } else {
+                                            $gain_user2 = 0;
+                                        }
+                                    } else {
+                                        $slicetirageturbo2 = array_slice($tirage, 0, 4);
+                                        $slicetiragemachineturbo2 = array_slice($tirage_machine, 0, 4);
+                                        $res1 = array_intersect($choix, $slicetirageturbo2);
+                                        $res2 = array_intersect($choix, $slicetiragemachineturbo2);
+
+                                        if (count($res1) == 3) {
+                                            $gain_user2 = (($coef_TURBO4 * $mise) * 60) / 100;
+                                        } else {
+                                            if (count($res2) == 3) {
+                                                $gain_user2 = (($coef_TURBO4 * $mise) * 40) / 100;
+                                            } else {
+                                                $gain_user2 = 0;
+                                            }
+                                        }
+                                    }
+                                }
+
+                                if ($typedeparis == 'PERM 4N' or $typedeparis2 == '4N') {
+                                    if (!$doublechance) {
+                                        $sliceturbo2 =  array_slice($tirage, 0, 4);
+                                        $res = array_intersect($choix, $sliceturbo2);
+                                        if (count($res) == 4) {
+                                            $gain_user2 = ($coef_TURBO4 * $mise);
+                                        } else {
+                                            $gain_user2 = 0;
+                                        }
+                                    } else {
+                                        $slicetirageturbo2 = array_slice($tirage, 0, 4);
+                                        $slicetiragemachineturbo2 = array_slice($tirage_machine, 0, 4);
+                                        $res1 = array_intersect($choix, $slicetirageturbo2);
+                                        $res2 = array_intersect($choix, $slicetiragemachineturbo2);
+
+                                        if (count($res1) == 4) {
+                                            $gain_user2 = (($coef_TURBO4 * $mise) * 60) / 100;
+                                        } else {
+                                            if (count($res2) == 4) {
+                                                $gain_user2 = (($coef_TURBO4 * $mise) * 40) / 100;
+                                            } else {
+                                                $gain_user2 = 0;
+                                            }
+                                        }
+                                    }
+                                }
+                                break;
+                        }
+
                     }
 
                     $ticket->gains= $gain_user + $gain_user2;
